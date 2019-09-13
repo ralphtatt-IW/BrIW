@@ -1,0 +1,20 @@
+Drink:
+      - Tea
+      - Coffee
+      - Ect.
+
+      - Milk Level
+
+      - Heat Level
+
+      -
+
+Person:
+      - Brewer
+      - Drinker
+
+
+
+Order -> Person orders a drink Drink
+
+Brew Round -> Team specific list of orders
