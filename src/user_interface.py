@@ -18,8 +18,6 @@ def seperator(length):
     print("+")
 
 # Centers text and makes uppercase
-
-
 def header(s, length):
     spaces = length - len("| " + s + "|")
     print_in_line("| ")
