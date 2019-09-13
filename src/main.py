@@ -7,7 +7,7 @@ from prettytable import PrettyTable
 import pickle
 import os
 import sys
-os.system("pwd")
+
 arguments = sys.argv
 
 # Loading data to file
