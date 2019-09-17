@@ -11,7 +11,7 @@ class Person:
         self.rounds_made = 0
 
     def __str__(self):
-        return self.full_name
+        return f"{self.full_name} ({self.team})"
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -48,6 +48,9 @@ class Drink:
     def __str__(self):
         return self.name
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
     def get_table_headers(self):
         return ["Name"]
 
@@ -69,6 +72,9 @@ class Team:
     def __str__(self):
         return self.name
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
 
 # User makes an order for a drink
 class Order:
@@ -89,6 +95,9 @@ class Order:
     def get_details(self):
         return [self.person, self.drink, self.get_notes()]
 
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
+
 
 # A teams order is added to a round
 class Round:
@@ -101,7 +110,10 @@ class Round:
         self.length = length
 
     def __str__(self):
-        return f"Team:{self.team} - Maker:{self.maker}"
+        return f"Team:{self.team} - Maker:{self.maker.get_name()}"
+
+    def __eq__(self, other):
+        return self.__dict__ == other.__dict__
 
     def get_maker(self):
         return self.maker
