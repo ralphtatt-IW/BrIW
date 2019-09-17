@@ -21,7 +21,6 @@ def load_file_to_data(filename):
         return []
 
 
-
 def save_all():
     save_data_to_file(people, "people")
     save_data_to_file(drinks, "drinks")
@@ -45,45 +44,25 @@ def add_person():
     l_name = ui.get_string_input("What is their surname? $")
 
     # Add team?
-    print("Add team?")
-    add_team = ui.yes_or_no()
-
-    # List teams todo
-    if add_team:
-        team_index = choose_option_from_list(teams)
-        if team_index == -1:
-            add_team == False
-        else:
-            team = teams[team_index]
+    print("Select team: (Add team on main menu if it doesn't exist)")
+    team_index = choose_option_from_list(teams)
+    if team_index == -1:
+        return
+    else:
+        team = teams[team_index]
 
     # Add Favourite Drink
-    print("Add drink preference?")
-    add_pref = ui.yes_or_no()
-
-    # List Drinks todo
-    if add_pref:
-        print("Select drink from list:")
-
-        drink_index = choose_option_from_list(drinks)
-        if drink_index == -1:
-            add_pref = False
-        else:
-            pref = drinks[drink_index]
-
-    if add_pref:
-        if add_team:
-            new_person = Person(f_name, l_name, pref, team)
-        else:
-            new_person = Person(f_name, l_name, pref, None)
+    print("Select Drink: (Add drink on main menu if it doesn't exist)")
+    drink_index = choose_option_from_list(drinks)
+    if drink_index == -1:
+        return
     else:
-        if add_team:
-            new_person = Person(f_name, l_name, None, team)
-        else:
-            new_person = Person(f_name, l_name)
+        pref = drinks[drink_index]
+
+    new_person = Person(f_name, l_name, pref, team)
 
     # Add to list
     people.append(new_person)
-    save_data_to_file(people, "people")
     print("Person added!")
 
 
@@ -126,7 +105,7 @@ def choose_option_from_list(list):
 
     print("0. Cancel")
 
-    return ui.get_int_input(len(list) + 1) - 1
+    return ui.get_int_input(index - 1) - 1
 
 
 def start_round():
@@ -144,14 +123,24 @@ def start_round():
 
     print(f"Round being made by {new_round.get_maker()}")
     rounds.append(new_round)
-    save_data_to_file(rounds, "rounds")
 
 
 def add_to_round(round):
-    person_choice = choose_option_from_list(people)
-    if person_choice == -1:
-        return
-    person = people[person_choice]
+    while True:
+        person_choice = choose_option_from_list(people)
+
+        if person_choice == -1:
+            return
+        person = people[person_choice]
+
+        if person.get_team() != round.get_maker().get_team():
+            print(id(person.get_team()))
+            print(id(round.get_maker().get_team()))
+            print("Can only accept orders from same team!")
+            continue
+
+        break
+
     if person.get_preference() != None:
         print(f"Is the order {person.get_preference()}?")
         if ui.yes_or_no():
@@ -206,115 +195,125 @@ def debug():
     print("to be implemented")
 
 
-arguments = sys.argv
+def nuke_data():
+    save_data_to_file(people, "people_back_up")
+    save_data_to_file(drinks, "drinks_back_up")
+    save_data_to_file(rounds, "rounds_back_up")
+    save_data_to_file(teams, "teams_back_up")
+    save_data_to_file(completed_rounds, "completed_rounds_back_up")
+    save_data_to_file([], "people")
+    save_data_to_file([], "drinks")
+    save_data_to_file([], "rounds")
+    save_data_to_file([], "teams")
+    save_data_to_file([], "completed_rounds")
 
-# Loading data to file
-people = load_file_to_data("people")
-drinks = load_file_to_data("drinks")
-rounds = load_file_to_data("rounds")
-teams = load_file_to_data("teams")
-completed_rounds = load_file_to_data("completed_rounds")
 
-# If running as command line argument
-if len(arguments) > 1:
+if __name__ == "__main__":
 
-    if "get-people" in arguments:
-        ui.print_table("People", people)
+    arguments = sys.argv
+
+    # Loading data to file
+    people = load_file_to_data("people")
+    drinks = load_file_to_data("drinks")
+    rounds = load_file_to_data("rounds")
+    teams = load_file_to_data("teams")
+    completed_rounds = load_file_to_data("completed_rounds")
+
+    # If running as command line argument
+    if len(arguments) > 1:
+
+        if "get-people" in arguments:
+            ui.print_table("People", people)
+            exit()
+
+        if "get-drinks" in arguments:
+            ui.print_table("Drinks", drinks)
+            exit()
+
+        if "get-teams" in arguments:
+            ui.print_table("Teams", teams)
+            exit()
+
+        if "get-rounds" in arguments:
+            ui.print_table("Rounds", rounds)
+            exit()
+
+        if "nuke-data" in arguments:
+            print("Are you sure you want to delete all data?")
+
+            if ui.yes_or_no():
+                nuke_data()
+                print("Data nuked and backed up!")
+
+            exit()
+
+        print("Command not recognised")
         exit()
 
-    if "get-drinks" in arguments:
-        ui.print_table("Drinks", drinks)
-        exit()
+    # System Start
+    #ui.start_title()
 
-    if "get-preferences" in arguments:
-        print_preferences()
-        exit()
+    while True:
 
-    if "nuke-data" in arguments:
-        print("Are you sure you want to delete all data?")
-
-        if ui.yes_or_no():
-            save_data_to_file(people, "people_back_up")
-            save_data_to_file(drinks, "drinks_back_up")
-            save_data_to_file(rounds, "rounds_back_up")
-            save_data_to_file(teams, "teams_back_up")
-            save_data_to_file(completed_rounds, "completed_rounds_back_up")
-            save_data_to_file([], "people")
-            save_data_to_file([], "drinks")
-            save_data_to_file([], "rounds")
-            save_data_to_file([], "teams")
-            save_data_to_file([], "completed_rounds")
-            print("Data nuked and backed up!")
-
-        exit()
-
-    print("Command not recognised")
-    exit()
-
-# System Start
-#ui.start_title()
-
-while True:
-
-    os.system("clear")
-
-    ui.print_menu()
-
-    menu_option = ui.get_int_input(10)
-
-    if menu_option == 1:
         os.system("clear")
-        add_person()
 
-    if menu_option == 2:
-        os.system("clear")
-        view_people()
+        ui.print_menu()
 
-    if menu_option == 3:
-        os.system("clear")
-        add_drink()
+        menu_option = ui.get_int_input(10)
 
-    if menu_option == 4:
-        os.system("clear")
-        view_drinks()
+        if menu_option == 1:
+            os.system("clear")
+            add_person()
 
-    if menu_option == 5:
-        os.system("clear")
-        add_team()
+        if menu_option == 2:
+            os.system("clear")
+            view_people()
 
-    if menu_option == 6:
-        os.system("clear")
-        view_teams()
+        if menu_option == 3:
+            os.system("clear")
+            add_drink()
 
-    if menu_option == 7:
-        os.system("clear")
-        start_round()
+        if menu_option == 4:
+            os.system("clear")
+            view_drinks()
 
-    if menu_option == 8:
-        os.system("clear")
-        view_rounds()
+        if menu_option == 5:
+            os.system("clear")
+            add_team()
 
-    if menu_option == 9:
-        os.system("clear")
-        view_completed_rounds()
+        if menu_option == 6:
+            os.system("clear")
+            view_teams()
 
-    if menu_option == 10:
-        ui.help()
+        if menu_option == 7:
+            os.system("clear")
+            start_round()
 
-    if menu_option == 0:
-        os.system("clear")
-        print("Goodbye!")
-        break
+        if menu_option == 8:
+            os.system("clear")
+            view_rounds()
 
-    if menu_option == 142857:
-        os.system("clear")
-        debug()
+        if menu_option == 9:
+            os.system("clear")
+            view_completed_rounds()
 
-    for round in rounds:
-        if not round.active:
-            rounds.remove(round)
-            completed_rounds.append(round)
-    save_all()
+        if menu_option == 10:
+            ui.help()
+
+        if menu_option == 0:
+            os.system("clear")
+            print("Goodbye!")
+            break
+
+        if menu_option == 142857:
+            os.system("clear")
+            debug()
+
+        for round in rounds:
+            if not round.active:
+                rounds.remove(round)
+                completed_rounds.append(round)
+        save_all()
 
 
-    input("Press ENTER to continue")
+        input("Press ENTER to continue")
