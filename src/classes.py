@@ -77,11 +77,8 @@ class Order:
         self.drink = drink
         self.notes = notes
 
-    def change_order(drink):
-        self.drink = drink
-
-    def cancel_order():
-        pass
+    def change_order(self, new_drink):
+        self.drink = new_drink
 
     def get_table_headers(self):
         return ["Person", "Drink", "Notes"]
@@ -92,9 +89,8 @@ class Order:
     def get_details(self):
         return [self.person, self.drink, self.get_notes()]
 
+
 # A teams order is added to a round
-
-
 class Round:
     def __init__(self, maker, team="General", length=600):
         self.maker = maker
@@ -109,9 +105,6 @@ class Round:
 
     def get_maker(self):
         return self.maker
-
-    def list_orders(self):
-        pass
 
     def add_order(self, order):
         self.orders.append(order)
