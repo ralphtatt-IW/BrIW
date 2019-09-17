@@ -101,6 +101,20 @@ def print_menu():
     print("\t0. Quit")
     seperator(DEFAULT_LENGTH)
 
+def print_nuke():
+    print("""     _.-^^---....,,--
+ _--                  --_
+<                        >)
+|                         |
+ \\._                   _./
+    ```--. . , ; .--'''
+          | |   |
+       .-=||  | |=-.
+       `-=#$%&%$#=-'
+          | ;  :|
+ _____.,-#%&$@%#&#~,._____
+""")
+
 
 def help():
     print("There is no help")
@@ -113,9 +127,6 @@ def get_int_input(limit):
         if not option.isdigit():
             print("Not valid option!")
             continue
-
-        if int(option) == 142857:
-            return int(option)
 
         if int(option) > limit or int(option) < 0:
             print(f"Must be between 0 and {limit}")
