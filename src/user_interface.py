@@ -5,8 +5,6 @@ from prettytable import PrettyTable
 DEFAULT_LENGTH = 43
 
 # OUPUT
-
-
 def print_in_line(s):
     print(s, end="")
 
@@ -107,9 +105,7 @@ def print_menu():
 def help():
     print("There is no help")
 
-# Input
-
-
+# INPUT
 def get_int_input(limit):
     while True:
         option = input("Select Option $ ")
@@ -131,9 +127,9 @@ def get_int_input(limit):
 def yes_or_no():
     while True:
         answer = input("Y/N?").lower()
-        if 'y' in answer:
+        if 'y' == answer:
             return True
-        if 'n' in answer:
+        if 'n' == answer:
             return False
         print("Not recognised")
 
@@ -144,3 +140,6 @@ def get_string_input(s):
         if string != "":
             return string
         print("Can not be empty")
+
+if __name__ == "__main__":
+    print("Why are you running this as main?")
