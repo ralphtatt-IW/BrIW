@@ -1,6 +1,5 @@
 import time
 
-
 class Person:
     # name
     def __init__(self, first_name, surname, preference=None, team=None):
@@ -60,22 +59,12 @@ class Team:
     def __init__(self, name, location):
         self.name = name
         self.location = location
-        members = []
-
-    def add_member(self, person):
-        members.append(person)
-
-    def remove_members(self, person):
-        members.remove(person)
 
     def get_table_headers(self):
         return ["Name", "Location"]
 
     def get_details(self):
         return [self.name, self.location]
-
-    def get_members(self):
-        return members
 
     def __str__(self):
         return self.name
