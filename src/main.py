@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 from classes import *
 import user_interface as ui
-from functions import *
 
 from prettytable import PrettyTable
 import pickle
@@ -220,19 +219,15 @@ completed_rounds = load_file_to_data("completed_rounds")
 if len(arguments) > 1:
 
     if "get-people" in arguments:
-        printing.print_table("People", people)
+        ui.print_table("People", people)
         exit()
 
     if "get-drinks" in arguments:
-        printing.print_table("Drinks", drinks)
+        ui.print_table("Drinks", drinks)
         exit()
 
     if "get-preferences" in arguments:
         print_preferences()
-        exit()
-
-    if "easter-egg" in arguments:
-        printing.start_credits()
         exit()
 
     if "nuke-data" in arguments:
@@ -257,7 +252,7 @@ if len(arguments) > 1:
     exit()
 
 # System Start
-# ui.start_title()
+#ui.start_title()
 
 while True:
 
@@ -265,7 +260,7 @@ while True:
 
     ui.print_menu()
 
-    menu_option = ui.get_int_input(9)
+    menu_option = ui.get_int_input(10)
 
     if menu_option == 1:
         os.system("clear")
