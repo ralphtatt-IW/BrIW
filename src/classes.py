@@ -1,5 +1,6 @@
 import time
 
+
 class Person:
     # name
     def __init__(self, first_name, surname, preference=None, team=None):

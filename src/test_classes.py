@@ -142,7 +142,8 @@ class Test_Person(unittest.TestCase):
         person = Person("Tessie", "Testingworth", drink, team)
 
         actual_result = person.get_details()
-        expected_result = [person.get_name(), person.get_team(), person.get_preference(), person.get_rounds_made()]
+        expected_result = [person.get_name(), person.get_team(
+        ), person.get_preference(), person.get_rounds_made()]
 
         self.assertEqual(actual_result, expected_result)
 
@@ -175,7 +176,6 @@ class Test_Order(unittest.TestCase):
         actual_result = order.drink
 
         self.assertEqual(actual_result, expected_result)
-
 
     def test_get_table_headers(self):
         drink = Drink("Milk")
@@ -304,7 +304,7 @@ class Test_Round(unittest.TestCase):
         person = Person("Tessie", "Testingworth", drink, team)
         round = Round(person, team)
 
-        expected_result =  ["Team Name", "Maker", "Elasped Time", "Order Size"]
+        expected_result = ["Team Name", "Maker", "Elasped Time", "Order Size"]
         actual_result = round.get_table_headers()
 
         self.assertEqual(actual_result, expected_result)
@@ -316,21 +316,10 @@ class Test_Round(unittest.TestCase):
         round = Round(person, team)
         round.finish_round()
 
-        expected_result =  ["Team Name", "Maker", "Duration", "Order Size"]
+        expected_result = ["Team Name", "Maker", "Duration", "Order Size"]
         actual_result = round.get_table_headers()
 
         self.assertEqual(actual_result, expected_result)
-
-    # def elapsed_time(self):
-    #     duration = time.time() - self.start_time
-    #     if duration > 60:
-    #         duration = duration / 60
-    #         return str(round(duration)) + "m"
-    #     return str(round(duration)) + "s"
-    #
-    # def get_order_size(self):
-    #     return len(self.orders)
-    #
 
     # def test_get_details(self):
     #     if self.active:
@@ -338,19 +327,13 @@ class Test_Round(unittest.TestCase):
     #     else:
     #         time_type = self.duration
     #     return [self.get_team(), self.get_maker(), time_type, self.get_order_size()]
+    # def elapsed_time(self):
+    #     duration = time.time() - self.start_time
+    #     if duration > 60:
+    #         duration = duration / 60
+    #         return str(round(duration)) + "m"
+    #     return str(round(duration)) + "s"
 
-    # def add_order(self, order):
-    #     self.orders.append(order)
-
-# class Test_Func(unittest.TestCase):
-#     def test_add_person(self):
-#         people = []
-#         f_name = "Tessie"
-#         l_name = "Testington"
-#         pref = Drink("Coffee")
-#         team = Team("Academy", "2nd Floor")
-#
-#         add_person(f_name, l_name, pref, team)
 
 if __name__ == "__main__":
     unittest.main()

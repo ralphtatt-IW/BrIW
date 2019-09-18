@@ -53,7 +53,7 @@ if __name__ == "__main__":
         exit()
 
     # System Start
-    #ui.start_title()
+    # ui.start_title()
 
     while True:
 
@@ -108,8 +108,6 @@ if __name__ == "__main__":
             break
 
         update_rounds(rounds, completed_rounds)
-
-
 
         input("Press ENTER to continue")
         save_all(people, drinks, teams, rounds, completed_rounds)

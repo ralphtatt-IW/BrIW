@@ -6,6 +6,7 @@ import os
 def check_empty(data):
     return len(data) == 0
 
+
 def list_options(list):
     index = 1
 
@@ -111,7 +112,6 @@ def round_option(rounds, people):
     if maker_index == -1:
         return
 
-
     round_maker = people[maker_index]
     round_team = round_maker.get_team()
 
@@ -124,8 +124,7 @@ def add_round(round_maker, round_team, rounds):
     new_round = Round(round_maker, round_team)
     rounds.append(new_round)
 
-
-def add_order_to_round(round, people, drinks):
+def choose_person_for_order(round, people):
     while True:
         person_choice = choose_option_from_list(people)
 
@@ -138,8 +137,11 @@ def add_order_to_round(round, people, drinks):
             print("Can only accept orders from same team!")
             continue
 
-        break
+        return person
 
+
+def add_order_to_round(round, people, drinks):
+    person = choose_person_for_order(round, people)
 
     print(f"Is the order {person.get_preference()}?")
     if ui.yes_or_no():
