@@ -124,6 +124,7 @@ def add_round(round_maker, round_team, rounds):
     new_round = Round(round_maker, round_team)
     rounds.append(new_round)
 
+
 def choose_person_for_order(round, people):
     while True:
         person_choice = choose_option_from_list(people)
