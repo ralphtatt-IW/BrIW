@@ -5,6 +5,8 @@ from prettytable import PrettyTable
 DEFAULT_LENGTH = 43
 
 # OUPUT
+
+
 def print_in_line(s):
     print(s, end="")
 
@@ -16,6 +18,8 @@ def seperator(length):
     print("+")
 
 # Centers text and makes uppercase
+
+
 def header(s, length):
     spaces = length - len("| " + s + "|")
     print_in_line("| ")
@@ -101,6 +105,7 @@ def print_menu():
     print("\t0. Quit")
     seperator(DEFAULT_LENGTH)
 
+
 def print_nuke():
     print("""     _.-^^---....,,--
  _--                  --_
@@ -120,6 +125,8 @@ def help():
     print("There is no help")
 
 # INPUT
+
+
 def get_int_input(limit):
     while True:
         option = input("Select Option $ ")
@@ -151,6 +158,7 @@ def get_string_input(s):
         if string != "":
             return string
         print("Can not be empty")
+
 
 if __name__ == "__main__":
     print("Why are you running this as main?")
