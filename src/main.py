@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
 from classes import *
-from file_management import *
+import file_management as fm
 import user_interface as ui
 from functions import *
 
@@ -14,11 +14,11 @@ if __name__ == "__main__":
     arguments = sys.argv
 
     # Loading data to file
-    people = load_file_to_data("people")
-    drinks = load_file_to_data("drinks")
-    rounds = load_file_to_data("rounds")
-    teams = load_file_to_data("teams")
-    completed_rounds = load_file_to_data("completed_rounds")
+    people = fm.load_file_to_data("people")
+    drinks = fm.load_file_to_data("drinks")
+    rounds = fm.load_file_to_data("rounds")
+    teams = fm.load_file_to_data("teams")
+    completed_rounds = fm.load_file_to_data("completed_rounds")
 
     # If running as command line argument
     if len(arguments) > 1:
@@ -43,7 +43,7 @@ if __name__ == "__main__":
             print("Are you sure you want to delete all data?")
 
             if ui.yes_or_no():
-                nuke_data(people, drinks, teams, rounds, completed_rounds)
+                fm.nuke_data(people, drinks, teams, rounds, completed_rounds)
                 ui.print_nuke()
                 print("Data nuked!")
 
@@ -110,4 +110,4 @@ if __name__ == "__main__":
         update_rounds(rounds, completed_rounds)
 
         input("Press ENTER to continue")
-        save_all(people, drinks, teams, rounds, completed_rounds)
+        fm.save_all(people, drinks, teams, rounds, completed_rounds)
