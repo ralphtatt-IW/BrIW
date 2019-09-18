@@ -32,6 +32,20 @@ class Test_Drink(unittest.TestCase):
 
         self.assertEqual(actual_result, expected_result)
 
+    def test_equal_to_true(self):
+        first_drink = Drink("Milk")
+
+        second_drink = Drink("Milk")
+
+        self.assertEqual(first_drink, second_drink)
+
+    def test_equal_to_false(self):
+        first_drink = Drink("Milk")
+
+        second_drink = Drink("Not Milk")
+
+        self.assertNotEqual(first_drink, second_drink)
+
 
 class Test_Team(unittest.TestCase):
     def test_get_table_headers(self):
