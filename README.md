@@ -76,6 +76,5 @@ To do
 
 ## Acknowledgments
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
 * **Henry** - *README Contributions*
 * **Julio** - *Formatting help for system*
