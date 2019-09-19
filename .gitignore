@@ -2,6 +2,7 @@
 /src/.pytest_cache
 /src/.coverage
 
+.non_push
 .env
 .venv
 env/
