@@ -4,9 +4,9 @@
 
 ## Getting Started
 
-To run the system, run the main.py file
+To run the system, run the main.py file in 'src'
 ```
-./src/main.py
+./main.py
 ```
 
 ### Prerequisites
@@ -19,27 +19,17 @@ And some requirements I haven't made obvious yet
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+Make a virtual environement and run
 
 ```
-Give the example
+pip3 install -r requirements.txt
 ```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
 Run the following command in main folder
 ```
-pytest src/
+pytest src/.
 ```
 
 <!-- ### Break down into end to end tests
@@ -87,5 +77,5 @@ To do
 ## Acknowledgments
 
 * **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-* Inspiration
-* etc
+* **Henry** - *README Contributions*
+* **Julio** - *Formatting help for system*
