@@ -72,7 +72,7 @@ def person_option(people, teams, drinks):
     pref = drinks[drink_index]
 
     add_person(f_name, l_name, pref, team, people)
-    print(f"{f_name} added!")
+    print(f"{f_name.capitalize()} added!!")
 
 
 def add_drink(drink_name, drinks):
