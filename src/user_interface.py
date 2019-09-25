@@ -64,12 +64,12 @@ def start_title():
         seperator(DEFAULT_LENGTH)
         for j in range(0, 8):
             row(lines[i + j], DEFAULT_LENGTH)
-        header("Now with pickle!", DEFAULT_LENGTH)
+        header("Now with DATABASES!", DEFAULT_LENGTH)
         seperator(DEFAULT_LENGTH)
         if i == 0:
-            os.system("espeak -p 0 'Welcome to..'")
+            os.system("espeak -p 0 'Welcome to... BrIW'")
         time.sleep(.1)
-    os.system("espeak -p 99 'brew, now with pickel' ")
+    os.system("espeak -p 99 'all your base are belong to us' ")
 
 
 def title():
@@ -80,7 +80,7 @@ def title():
     for line in lines:
         if line.strip() != "":
             row(line, DEFAULT_LENGTH)
-    header("Now with pickle!", DEFAULT_LENGTH)
+    header("Now with DATABASES!", DEFAULT_LENGTH)
     seperator(DEFAULT_LENGTH)
 
 
