@@ -1,8 +1,9 @@
-/src/__pycache__/
-/src/.pytest_cache
-/src/.coverage
+src/__pycache__/
+src/.pytest_cache
+src/.coverage
 
-./non_push/
+.DS_Store
+non_push/
 .env
 .venv
 env/
