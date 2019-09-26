@@ -3,8 +3,9 @@ from classes import *
 import file_management as fm
 import user_interface as ui
 from functions import *
+import database_connect as dbc
 
-
+import pymysql
 from prettytable import PrettyTable
 import os
 import sys
@@ -20,6 +21,7 @@ if __name__ == "__main__":
     teams = fm.load_file_to_data("teams")
     completed_rounds = fm.load_file_to_data("completed_rounds")
 
+
     # If running as command line argument
     if len(arguments) > 1:
 
@@ -28,11 +30,11 @@ if __name__ == "__main__":
             exit()
 
         if "get-drinks" in arguments:
-            ui.print_table("Drinks", drinks)
+            print(dbc.get_all_drinks())
             exit()
 
         if "get-teams" in arguments:
-            ui.print_table("Teams", teams)
+            print(dbc.get_all_teams())
             exit()
 
         if "get-rounds" in arguments:
@@ -48,20 +50,21 @@ if __name__ == "__main__":
                 print("Data nuked!")
 
             exit()
-
-        print("Command not recognised")
-        exit()
-
-    # System Start
-    # ui.start_title()
+        if "-f" not in arguments:
+            print("Command not recognised")
+            exit()
+        else:
+            # System Start
+            ui.start_title()
 
     while True:
 
         os.system("clear")
 
         ui.print_menu()
-
         menu_option = ui.get_int_input(10)
+
+
 
         if menu_option == 1:
             os.system("clear")
