@@ -5,6 +5,10 @@ from main import *
 
 
 class Test_Drink(unittest.TestCase):
+    def test_to_sql_values(self):
+        
+        pass
+
     def test_to_string(self):
         drink = Drink("Milk")
 
@@ -77,6 +81,15 @@ class Test_Team(unittest.TestCase):
 
 
 class Test_Person(unittest.TestCase):
+    #
+    # def get_sql_values(self):
+    #     drink = Drink("Milk")
+    #     team = Team("Academy", "2nd Floor")
+    #     person = Person("Tessie", "Testingworth", drink, team)
+    #
+    #     actual_result = person.add_this_person_to_database();
+    #     expected_result = "VALUES('Tessie','Testingworth','{team.get_}')"
+    #     pass
 
     def test_to_string(self):
         drink = Drink("Milk")
