@@ -47,6 +47,8 @@ def print_table(name, data):
         print(f"There is no data for {name}!")
         return
 
+    data = list(data.values())
+
     tbl = PrettyTable()
     tbl.field_names = data[0].get_table_headers()
 
@@ -98,9 +100,8 @@ def print_menu():
     print("")
     print("\t7. Start Round")
     print("\t8. View Active Rounds")
-    print("\t9. View Completed Rounds")
     print("")
-    print("\t10. Help")
+    print("\t9. Help")
     print("")
     print("\t0. Quit")
     seperator(DEFAULT_LENGTH)
