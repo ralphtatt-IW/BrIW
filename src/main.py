@@ -15,18 +15,18 @@ if __name__ == "__main__":
     arguments = sys.argv
 
     # Loading data to file
-    people = fm.load_file_to_data("people")
-    drinks = fm.load_file_to_data("drinks")
-    rounds = fm.load_file_to_data("rounds")
-    teams = fm.load_file_to_data("teams")
-    completed_rounds = fm.load_file_to_data("completed_rounds")
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    rounds = dbc.get_all_rounds(people, teams)
+    orders = dbc.get_all_orders(drinks, people, rounds)
 
 
     # If running as command line argument
     if len(arguments) > 1:
 
         if "get-people" in arguments:
-            ui.print_table("People", people)
+            print(dbc.get_all_people())
             exit()
 
         if "get-drinks" in arguments:
@@ -38,18 +38,9 @@ if __name__ == "__main__":
             exit()
 
         if "get-rounds" in arguments:
-            ui.print_table("Rounds", rounds)
+            print(dbc.get_all_rounds())
             exit()
 
-        if "nuke-data" in arguments:
-            print("Are you sure you want to delete all data?")
-
-            if ui.yes_or_no():
-                fm.nuke_data(people, drinks, teams, rounds, completed_rounds)
-                ui.print_nuke()
-                print("Data nuked!")
-
-            exit()
         if "-f" not in arguments:
             print("Command not recognised")
             exit()
@@ -99,10 +90,6 @@ if __name__ == "__main__":
             view_rounds(rounds, people, drinks)
 
         if menu_option == 9:
-            os.system("clear")
-            view_completed_rounds(completed_rounds)
-
-        if menu_option == 10:
             ui.help()
 
         if menu_option == 0:
@@ -110,7 +97,5 @@ if __name__ == "__main__":
             print("Goodbye!")
             break
 
-        update_rounds(rounds, completed_rounds)
 
         input("Press ENTER to continue")
-        fm.save_all(people, drinks, teams, rounds, completed_rounds)
