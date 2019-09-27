@@ -6,6 +6,7 @@ from classes import *
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
 
+
 class Drink_Handler(BaseHTTPRequestHandler):
     def _set_header(self):
         self.send_response(200)
@@ -14,15 +15,33 @@ class Drink_Handler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         self._set_header()
+        data_choice = self.path.split('/')[1]
 
-        drinks = dbc.get_all_drinks()
+        if data_choice == "drinks":
+            data = dbc.get_all_drinks()
 
-        jd = json.dumps(drinks, cls=MyEncoder)
+        elif data_choice == "teams":
+            data = dbc.get_all_teams()
+
+        elif data_choice == "people":
+            data = dbc.get_all_people(dbc.get_all_drinks(), dbc.get_all_teams())
+
+        elif data_choice == "rounds":
+            teams =  dbc.get_all_teams()
+            drinks = dbc.get_all_drinks()
+            people = dbc.get_all_people(drinks, teams)
+            rounds = dbc.get_all_rounds(people, teams)
+            orders = dbc.get_all_orders(drinks, people, rounds)
+            data = rounds
+
+        else:
+            data = "ya dun goofed"
+
+        jd = json.dumps(data, cls=MyEncoder)
 
         self.wfile.write(jd.encode('utf-8'))
 
     def do_POST(self):
-
         content_length = int(self.headers['Content-Length'])
         data = json.loads(self.rfile.read(content_length))
 
@@ -32,6 +51,7 @@ class Drink_Handler(BaseHTTPRequestHandler):
 
         self.send_response(201)
         self.end_headers()
+
 
 if __name__ == "__main__":
     server_address = ('0.0.0.0', 8080)
