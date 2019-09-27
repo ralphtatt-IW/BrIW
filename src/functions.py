@@ -1,26 +1,30 @@
 import user_interface as ui
 from classes import *
 import os
+import database_connect as dbc
 
 
 def check_empty(data):
     return len(data) == 0
 
 
-def list_options(list):
+def list_options(dict):
     index = 1
 
-    for item in list:
+    for item in list(dict.values()):
         print(f"{index}. {item}")
         index += 1
 
     print("0. Cancel")
 
 
-def choose_option_from_list(list):
-    list_options(list)
-
-    return ui.get_int_input(len(list)) - 1
+def choose_key_from_dict(d):
+    list_options(d)
+    option_chosen = ui.get_int_input(len(d)) -1
+    if option_chosen == -1:
+        return -1
+    key = list(d.keys())[option_chosen]
+    return key
 
 
 def view_people(people):
@@ -36,11 +40,13 @@ def view_teams(teams):
 
 
 def add_person(f_name, l_name, pref, team, people):
-    new_person = Person(f_name, l_name, pref, team)
+    id = dbc.get_fresh_id("People", "person_id")
+    new_person = Person(id, f_name, l_name, pref.drink_id, team.team_id)
     # Add to list
-    people.append(new_person)
+    dbc.save_person(new_person)
+    people[id] = new_person
 
-
+#Adding a new person
 def person_option(people, teams, drinks):
     if check_empty(teams):
         print("Add a team option first")
@@ -57,27 +63,29 @@ def person_option(people, teams, drinks):
 
     # Add team?
     print("Select team: (Add team on main menu if it doesn't exist)")
-    team_index = choose_option_from_list(teams)
-    if team_index == -1:
+    team_key = choose_key_from_dict(teams)
+    if team_key == -1:
         return
 
-    team = teams[team_index]
+    team = teams[team_key]
 
     # Add Favourite Drink
     print("Select Drink: (Add drink on main menu if it doesn't exist)")
-    drink_index = choose_option_from_list(drinks)
-    if drink_index == -1:
+    drink_key = choose_key_from_dict(drinks)
+    if drink_key == -1:
         return
 
-    pref = drinks[drink_index]
+    pref = drinks[drink_key]
 
     add_person(f_name, l_name, pref, team, people)
     print(f"{f_name.capitalize()} added!!")
 
 
 def add_drink(drink_name, drinks):
-    new_drink = Drink(drink_name)
-    drinks.append(new_drink)
+    id = dbc.get_fresh_id("Drinks", "drink_id")
+    new_drink = Drink(id, drink_name)
+    dbc.save_drink(new_drink)
+    drinks[id] = new_drink
 
 
 def drink_option(drinks):
@@ -88,8 +96,12 @@ def drink_option(drinks):
 
 
 def add_team(team_name, team_location, teams):
-    new_team = Team(team_name, team_location)
-    teams.append(new_team)
+    id = dbc.get_fresh_id("Teams", "team_id")
+
+    new_team = Team(id, team_name, team_location)
+
+    teams[id] = new_team
+    dbc.save_team(new_team)
 
 
 def team_option(teams):
@@ -107,12 +119,12 @@ def round_option(rounds, people):
 
     print("Who is making the round?")
 
-    maker_index = choose_option_from_list(people)
+    maker_key = choose_key_from_dict(people)
 
-    if maker_index == -1:
+    if maker_key == -1:
         return
 
-    round_maker = people[maker_index]
+    round_maker = people[maker_key]
     round_team = round_maker.get_team()
 
     add_round(round_maker, round_team, rounds)
@@ -121,13 +133,17 @@ def round_option(rounds, people):
 
 
 def add_round(round_maker, round_team, rounds):
-    new_round = Round(round_maker, round_team)
-    rounds.append(new_round)
+    id = dbc.get_fresh_id("Rounds", "round_id")
+
+    new_round = Round(id, round_maker, 1, round_team)
+
+    rounds[id] = new_round
+    dbc.save_round(new_round)
 
 
 def choose_person_for_order(round, people):
     while True:
-        person_choice = choose_option_from_list(people)
+        person_choice = choose_key_from_dict(people)
 
         if person_choice == -1:
             return
@@ -151,8 +167,13 @@ def add_order_to_round(round, people, drinks):
         return
 
     print("Choose drink from list")
-    drink_choice = choose_option_from_list(drinks)
-    new_order = Order(person, drinks[drink_choice])
+
+    drink_key = choose_key_from_dict(drinks)
+    if drink_key == -1:
+        return -1
+
+    new_order = Order(person, drinks[drink_key])
+    save_order(new_order)
     round.add_order(new_order)
 
 
@@ -161,7 +182,7 @@ def view_rounds(rounds, people, drinks):
     if len(rounds) == 0:
         return
     print("Would you like to see details of a round?")
-    user_choice = choose_option_from_list(rounds)
+    user_choice = choose_key_from_dict(rounds)
     if user_choice == -1:
         return
     round_details(rounds[user_choice], people, drinks)
@@ -186,14 +207,3 @@ def round_details(round, people, drinks):
         print("Not implemented")
     if menu_option == 0:
         return
-
-
-def update_rounds(rounds, completed_rounds):
-    for round in rounds:
-        if not round.active:
-            rounds.remove(round)
-            completed_rounds.append(round)
-
-
-def view_completed_rounds(completed_rounds):
-    ui.print_table("Old Rounds", completed_rounds)
