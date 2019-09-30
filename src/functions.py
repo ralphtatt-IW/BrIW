@@ -20,7 +20,7 @@ def list_options(dict):
 
 def choose_key_from_dict(d):
     list_options(d)
-    option_chosen = ui.get_int_input(len(d)) -1
+    option_chosen = ui.get_int_input(len(d)) - 1
     if option_chosen == -1:
         return -1
     key = list(d.keys())[option_chosen]
@@ -39,14 +39,16 @@ def view_teams(teams):
     ui.print_table("Teams", teams)
 
 
-def add_person(f_name, l_name, pref, team, people):
+def add_person(f_name, l_name, pref, team, people={}):
     id = dbc.get_fresh_id("People", "person_id")
-    new_person = Person(id, f_name, l_name, pref.drink_id, team.team_id)
+    new_person = Person(id, f_name, l_name, team, pref)
     # Add to list
     dbc.save_person(new_person)
     people[id] = new_person
 
-#Adding a new person
+# Adding a new person
+
+
 def person_option(people, teams, drinks):
     if check_empty(teams):
         print("Add a team option first")
@@ -81,7 +83,7 @@ def person_option(people, teams, drinks):
     print(f"{f_name.capitalize()} added!!")
 
 
-def add_drink(drink_name, drinks):
+def add_drink(drink_name, drinks={}):
     id = dbc.get_fresh_id("Drinks", "drink_id")
     new_drink = Drink(id, drink_name)
     dbc.save_drink(new_drink)
@@ -95,7 +97,7 @@ def drink_option(drinks):
     add_drink(drink_name, drinks)
 
 
-def add_team(team_name, team_location, teams):
+def add_team(team_name, team_location, teams={}):
     id = dbc.get_fresh_id("Teams", "team_id")
 
     new_team = Team(id, team_name, team_location)
@@ -132,10 +134,10 @@ def round_option(rounds, people):
     print(f"Round being made by {round_maker}")
 
 
-def add_round(round_maker, round_team, rounds):
+def add_round(round_maker, round_team, rounds={}):
     id = dbc.get_fresh_id("Rounds", "round_id")
 
-    new_round = Round(id, round_maker, 1, round_team)
+    new_round = Round(id, round_maker, True, round_team)
 
     rounds[id] = new_round
     dbc.save_round(new_round)
@@ -156,6 +158,11 @@ def choose_person_for_order(round, people):
 
         return person
 
+def add_order(person, drink, round, notes=""):
+    id = dbc.get_fresh_id("Orders", "order_id")
+    new_order = Order(id, person, drink, round.round_id, notes)
+    dbc.save_order(new_order)
+    round.add_order(new_order)
 
 def add_order_to_round(round, people, drinks):
     person = choose_person_for_order(round, people)
@@ -172,9 +179,7 @@ def add_order_to_round(round, people, drinks):
     if drink_key == -1:
         return -1
 
-    new_order = Order(person, drinks[drink_key])
-    save_order(new_order)
-    round.add_order(new_order)
+    add_order(person, drinks[drink_key], round )
 
 
 def view_rounds(rounds, people, drinks):
