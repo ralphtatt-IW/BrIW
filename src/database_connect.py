@@ -179,7 +179,7 @@ def save_order(order):
         con = make_connection()
         with con.cursor() as cursor:
             cursor.execute(f"""INSERT INTO Orders(order_id, drink_id, person_id, round_id, notes)
-                               VALUES({order.order_id}, {order.drink_id}, {order.person_id},
+                               VALUES({order.order_id}, {order.drink.drink_id}, {order.person.person_id},
                                {order.round_id}, '{order.notes}')""")
             con.commit()
     finally:
