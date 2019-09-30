@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>New order</title>
+  </head>
+  <body>
+    <legend>Add new order:</legend>
+    <form class="" method="post">
+
+
+    <label for="round-name">Select Round:</label>
+    <select name="round-name" method="GET" action="/">
+      {% for key in rounds %}
+        <option value="{{key}}">{{rounds[key].__str__()}}</option>
+      {% endfor %}
+    </select>
+    <br>
+    <label for="person-name">Select person:</label>
+    <select name="person-name" method="GET" action="/">
+      {% for key in people %}
+        <option value="{{key}}">{{people[key].full_name}} - ({{people[key].preference}})</option>
+      {% endfor %}
+    </select>
+    <br>
+    <label for="notes">Notes:</label>
+    <input type="text" name="notes">
+    <br>
+    <input id="submit-btn" type="submit" value="Submit">
+    </form>
+  </body>
+</html>
