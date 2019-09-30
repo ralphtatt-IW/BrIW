@@ -1,73 +1,90 @@
 #! /usr/bin/env python3
-
-from http.server import HTTPServer, BaseHTTPRequestHandler
-import classes
+from flask import Flask, jsonify, request, render_template
 import database_connect as dbc
+from classes import *
+from functions import *
 
-drinks = dbc.get_all_drinks()
-teams = dbc.get_all_teams()
-people = dbc.get_all_people(drinks, teams)
-rounds = dbc.get_all_rounds(people, teams)
-orders = dbc.get_all_orders(drinks, people, rounds)
+app = Flask(__name__)
 
-def render_drinks(drinks):
-    drinks_html = ""
-    for key in drinks:
-        drinks_html += f'<li>{drinks[key]}</li>'
-    return drinks_html
 
-def render_people(people):
-    people_html = ""
-    for key in people:
-        people_html += f'<li>{people[key]}</li>'
-    return people_html
+@app.route("/")
+def hello_world():
+    return "Absolutely dank"
 
-def render_rounds(rounds):
-    rounds_html = ""
-    for key in rounds:
-        rounds_html += f'<li>{rounds[key]}</li>'
-    return rounds_html
 
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        # Tell the client we're about to send HTML content in our HTTP payload
-        self.send_response(200)
-        self.send_header('Content-Type', 'text/html')
-        self.end_headers()
+@app.route("/drinks", methods=['GET'])
+def get_drinks():
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        return jsonify([drink.to_json() for drink in list(drinks.values())])
 
-        # Produce the HTML
-        html_document = f"""
-<!doctype html>
-<html>
-    <head>
-        <link rel="stylesheet" href="./css/master.css">
-    </head>
 
-    <body>
-        <marquee>
-        <p>Available drinks:</p>
-        <ul>
-            {render_drinks(drinks)}
-        </ul>
-        <p>Available People:</p>
-        <ul>
-            {render_people(people)}
-        </ul>
-        <p>Rounds:</p>
-        <ul>
-            {render_rounds(rounds)}
-        </ul>
-          <iframe id="myvideo" width="560" height="315" src="https://www.youtube.com/embed/HP362ccZBmY?autoplay=1&mute=0&controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-         </marquee>
-    </body>
+@app.route('/new_drink', methods=['GET', 'POST'])
+def new_drink():
+    if request.method == "GET":
+        return render_template('drinks_form.html', title="Create form")
 
-</html>
-"""
-        # Render and send response
-        self.wfile.write(html_document.encode('utf-8'))
+    elif request.method == "POST":
+        drink_name = request.form.get("drink-name")
+        add_drink(drink_name)
+        return render_template("return_drink.html", title="Posted", drink=drink_name)
+
+
+@app.route("/teams", methods=['GET'])
+def get_teams():
+    teams = dbc.get_all_teams()
+    return jsonify([team.to_json() for team in list(teams.values())])
+
+@app.route('/new_team', methods=['GET', 'POST'])
+def new_team():
+    if request.method == "GET":
+        return render_template('teams_form.html', title="Create form")
+
+    elif request.method == "POST":
+        team_name = request.form.get("team-name")
+        team_location = request.form.get("team-location")
+        add_team(team_name, team_location)
+        return render_template("return_team.html", title="Posted", name=team_name, location=team_location)
+
+
+@app.route("/people", methods=['GET'])
+def get_person():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    return jsonify([person.to_json() for person in list(people.values())])
+
+
+@app.route("/rounds", methods=['GET'])
+def get_rounds():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    rounds = dbc.get_all_rounds(people, teams)
+    orders = dbc.get_all_orders(drinks, people, rounds)
+    return jsonify([round.to_json() for round in list(rounds.values())])
+
+@app.route('/new_order', methods=['GET', 'POST'])
+def new_order():
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        rounds = dbc.get_all_rounds(people, teams)
+        return render_template('new_order.html', title="Create form", people=people, rounds=rounds)
+
+    elif request.method == "POST":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        rounds = dbc.get_all_rounds(people, teams)
+
+        round_key = request.form.get("round-name")
+        person_key = request.form.get("person-name")
+        notes = request.form.get("notes")
+        person = people[int(person_key)]
+        add_order(person, person.preference, rounds[int(round_key)], notes)
+        return render_template("return_order.html", title="Posted")
 
 if __name__ == "__main__":
-    server_address = ('', 8080)
-    httpd = HTTPServer(server_address, Handler)
-    print("Starting server")
-    httpd.serve_forever()
+    app.run(host='localhost', port=42069)
