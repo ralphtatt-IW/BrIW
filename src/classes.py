@@ -36,6 +36,15 @@ class Person:
     def set_preference(self, preference):
         self.preference = preference
 
+    def to_json(self):
+        return {
+            "people_id": self.person_id,
+            "first_name": self.first_name,
+            "second_name": self.second_name,
+            "preference_id": self.preference.drink_id,
+            "team_id": self.team.team_id
+        }
+
 
 class Drink:
     def __init__(self, drink_id, name):
@@ -53,6 +62,9 @@ class Drink:
 
     def get_details(self):
         return [self.name]
+
+    def to_json(self):
+        return self.__dict__
 
 
 class Team:
@@ -72,6 +84,9 @@ class Team:
 
     def get_details(self):
         return [self.name, self.location]
+
+    def to_json(self):
+        return self.__dict__
 
 
 # A teams order is added to a round
@@ -107,7 +122,18 @@ class Round:
     def get_details(self):
         return [self.get_team(), self.get_maker(), self.active]
 
+    def to_json(self):
+        return{
+            "round_id": self.round_id,
+            "maker": self.maker.to_json(),
+            "orders": [order.to_json() for order in list(self.orders.values())],
+            "active": self.active,
+            "team_id": self.team.team_id
+        }
+
 # User makes an order for a drink
+
+
 class Order:
     def __init__(self, order_id, person, drink, round_id, notes=None):
         self.order_id = order_id
@@ -131,3 +157,12 @@ class Order:
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
+
+    def to_json(self):
+        return {
+            "order_id": self.order_id,
+            "person": self.person.to_json(),
+            "drink": self.drink.to_json(),
+            "notes": self.notes,
+            "round_id": self.round_id
+        }
