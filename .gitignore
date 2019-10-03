@@ -2,6 +2,7 @@ src/__pycache__/
 src/.pytest_cache
 src/.coverage
 
+ansible/
 .DS_Store
 non_push/
 .env
