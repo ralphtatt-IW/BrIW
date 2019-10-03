@@ -160,7 +160,7 @@ def choose_person_for_order(round, people):
 
 def add_order(person, drink, round, notes=""):
     id = dbc.get_fresh_id("Orders", "order_id")
-    new_order = Order(id, person, drink, round.round_id, notes)
+    new_order = Order(id, drink, person, round.round_id, notes)
     dbc.save_order(new_order)
     round.add_order(new_order)
 
