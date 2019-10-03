@@ -86,5 +86,18 @@ def new_order():
         add_order(person, person.preference, rounds[int(round_key)], notes)
         return render_template("return_order.html", title="Posted")
 
+@app.route('/view_orders', methods=['GET'])
+def view_orders():
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        rounds = dbc.get_all_rounds(people, teams)
+        orders = dbc.get_all_orders(drinks, people, rounds)
+        pretty_orders = []
+        for o in list(orders.values()):
+            pretty_orders.append([o.order_id, o.round_id, o.drink.__str__(), o.person.__str__(), o.notes])
+
+        return render_template('view_orders.html', title="Do I even need a title", orders=pretty_orders)
+
 if __name__ == "__main__":
     app.run(host='localhost', port=42069)
