@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  {% if title %}
+  <title>{{ title }} - BrIW</title>
+  {% else %}
+  <title>BrIW</title>
+  {% endif %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/master.css') }}">
+
+</head>
+
+<body>
+  <div class="navbar">
+    <ul>
+      <li>HOME</li>
+      <li>ROUNDS</li>
+      <li>DRINKS</li>
+      <li>NOT DRINKS</li>
+    </ul>
+      <img id ="logo" src="{{ url_for('static',filename='logo.png') }}" alt="iw_logo"/>
+  </div>
+
+  <div class="container">
+    {% block content %}
+
+    {% endblock %}
+  </div>
+</body>
+
+</html>
