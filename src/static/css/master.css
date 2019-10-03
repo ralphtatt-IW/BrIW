@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Avenir Light';
+  background-color: #FFFFFF;
+}
+
+.navbar {
+  color: #E35205;
+  background-color: #333F48;
+  overflow: auto;
+  width: 100%;
+}
+
+.navbar li {
+  font-family: 'Avenir Black', Arial;
+  display: table-cell;
+  height: 4em;
+  min-width: 10em;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.navbar li:hover {
+  background-color: lightgrey;
+  color: #00B2A9;
+}
+
+
+.container {
+  margin: auto;
+  width: 75%;
+}
+
+#logo {
+  float: right;
+  max-height: 4em;
+}
+
+#orders {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#orders td, #orders th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#orders tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+
+#orders tr:hover {
+  background-color: #dddddd;
+}
+
+#orders th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #333F48;
+  color: white;
+}
