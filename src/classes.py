@@ -135,7 +135,7 @@ class Round:
 
 
 class Order:
-    def __init__(self, order_id, person, drink, round_id, notes=None):
+    def __init__(self, order_id, drink, person, round_id, notes):
         self.order_id = order_id
         self.person = person
         self.drink = drink
