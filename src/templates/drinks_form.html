@@ -5,19 +5,20 @@
   <meta charset="utf-8">
   <title>New Drink</title>
   <script>
-  function check_drink_name_valid(){
-    drink_name = document.getElementsByName("drink-name")[0].value;
-    if (drink_name.replace(/^\s+|\s+$/g, '') == ""){
-      alert("Drink name can not be blank");
-      return false;
+    function check_drink_name_valid() {
+      drink_name = document.getElementsByName("drink-name")[0].value;
+      // Removes whitespace
+      if (drink_name.replace(/^\s+|\s+$/g, '') == "") {
+        alert("Drink name can not be blank");
+        return false;
+      }
+      return confirm("Are you sure you want to have " + drink_name + " added?")
     }
-    return confirm("Are you sure you want to have " + drink_name + " added?")
-  }
   </script>
 </head>
 
 <body>
-  <form id="add-drink-form" method="post" onsubmit="return(check_drink_name_valid())">
+  <form id="add-drink-form" method="post" onsubmit="(check_drink_name_valid())">
     <legend>Add new Drink:</legend>
     <label for="drink-name">Drink:</label>
     <input id="drink-name" type="text" name="drink-name" />
