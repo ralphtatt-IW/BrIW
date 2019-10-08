@@ -7,9 +7,14 @@ from functions import *
 app = Flask(__name__)
 
 
+@app.errorhandler(404)
+def resource_not_found(e):
+    return jsonify(error=str(e)), 404
+
+
 @app.route("/")
 def hello_world():
-    return "Absolutely dank"
+    return "Hello there! There is no homepage"
 
 
 @app.route("/drinks", methods=['GET'])
@@ -100,4 +105,4 @@ def view_orders():
         return render_template('view_orders.html', title="Do I even need a title", orders=pretty_orders)
 
 if __name__ == "__main__":
-    app.run(host='localhost', port=42069)
+    app.run(host='0.0.0.0', port=42069)
