@@ -8,18 +8,29 @@ body {
   background-color: #FFFFFF;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
 .navbar {
+  font-size: large;
   color: #E35205;
   background-color: #333F48;
   overflow: auto;
   width: 100%;
 }
 
+.navbar ul{
+  float: left;
+}
+
 .navbar li {
   font-family: 'Avenir Black', Arial;
   display: table-cell;
-  height: 4em;
-  min-width: 10em;
+  height: 3em;
+  min-width: 5em;
+  padding: 0 1em;
   text-align: center;
   vertical-align: middle;
 }
@@ -37,7 +48,11 @@ body {
 
 #logo {
   float: right;
-  max-height: 4em;
+  max-height: 3em;
+}
+
+#logo:hover {
+  background-color: lightgrey;
 }
 
 #orders {
