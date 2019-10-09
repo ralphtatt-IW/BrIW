@@ -1,0 +1,18 @@
+{% extends "master.html" %}
+{% block content %}
+
+<h2>Who is making the round?</h2>
+
+<form class="" method="post">
+  <label for="team_id">Select Person:</label>
+  <select name="person_id" method="GET" action="/">
+    {% for key in people %}
+    <option value="{{key}}">{{people[key].full_name}}: {{people[key].team.name}}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <input class="button" id="submit-btn" type="submit" value="Submit">
+
+</form>
+
+{% endblock %}
