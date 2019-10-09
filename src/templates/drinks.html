@@ -1,7 +1,11 @@
 {% extends "master.html" %}
 {% block content %}
 
-<button type="button" name="button">New Drink</button>
+<div class="center">
+  <h1>Drinks</h1>
+  <input class="button" type="submit" value="New Drink"
+      onclick="window.location='/add_drink';" />
+</div>
 
 <table id="drinks">
   <tr>
