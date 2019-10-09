@@ -12,6 +12,29 @@ a {
   color: inherit;
 }
 
+.branding img {
+  width: 25%;
+}
+
+.branding {
+  overflow: hidden;
+  color: black;
+  text-align: center;
+  max-width: 100%;
+  max-height: 100%;
+  padding: 20px;
+}
+
+.branding span {
+  color: #E35205;
+  font-style: italic;
+}
+
+.branding p {
+  font-size: 22px;
+  padding: 10px;
+}
+
 .center {
   text-align: center;
 }
@@ -121,6 +144,15 @@ table th {
 
 .branding h1, .branding h2 {
   text-align: center;
+  color: black;
+}
+
+.branding h1 {
+  font-size: 72px;
+}
+
+.branding h2 {
+  font-size: 36px;
 }
 
 footer {
