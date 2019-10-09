@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+{% block content %}
+
+<div class="center">
+  <input type="submit" value="New Team"
+      onclick="window.location='/add_team';" />
+</div>
+
+<table id="teams">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Location</th>
+    <th>Add to table</th>
+  </tr>
+  {%  for t in teams  %}
+  <tr>
+    <td>
+      {{teams[t].team_id}}
+    </td>
+    <td>
+      {{teams[t].name}}
+    </td>
+    <td>
+      {{teams[t].location}}
+    </td>
+    <td>
+      <button type="button" name="button">Add Member</button>
+    </td>
+  </tr>
+  {% endfor  %}
+</table>
+{% endblock %}
