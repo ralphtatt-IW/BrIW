@@ -5,7 +5,6 @@ class Person:
         self.first_name = first_name
         self.second_name = second_name
         self.full_name = first_name + " " + second_name
-        self.second_name = second_name
         self.preference = preference
         self.team = team
 
