@@ -35,10 +35,60 @@ def new_team():
         return teams_page()
 
 
+@app.route('/view_team', methods=['GET', 'POST'])
+def view_team():
+    if request.method == "GET":
+        return teams_page()
+
+    if request.method == "POST":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+
+        result = request.form.to_dict()
+        team_id = int(result["team_id"])
+        team_name = teams[team_id].name
+
+        return render_template('view_team.html',
+                               team_id=team_id,
+                               team_name=team_name,
+                               people=people
+                               )
+
+
+@app.route('/add_member', methods=['GET', 'POST'])
+def new_member():
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        return render_template('add_member.html', title="Add Member", drinks=drinks, teams=teams)
+
+    if request.method == "POST":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        first_name = request.form.get("first_name")
+        second_name = request.form.get("second_name")
+        preference = drinks[int(request.form.get("drink_id"))]
+        team = teams[int(request.form.get("team_id"))]
+        add_person(first_name, second_name, preference, team)
+        return teams_page()
+
+
 @app.route("/drinks")
 def drinks_page():
     drinks = dbc.get_all_drinks()
     return render_template('drinks.html', title="Drinks", drinks=drinks)
+
+
+@app.route('/add_drink', methods=['GET', 'POST'])
+def new_drink():
+    if request.method == "GET":
+        return render_template('add_drink.html', title="Add Drink")
+
+    elif request.method == "POST":
+        drink_name = request.form.get("drink-name")
+        add_drink(drink_name)
+        return drinks_page()
 
 
 @app.route("/rounds")
@@ -49,48 +99,6 @@ def rounds_page():
     rounds = dbc.get_all_rounds(people, teams)
     orders = dbc.get_all_orders(drinks, people, rounds)
     return render_template('rounds.html', title="Rounds", rounds=rounds)
-
-
-@app.route("/api/people", methods=['GET'])
-def get_person():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    return jsonify([person.to_json() for person in list(people.values())])
-
-
-@app.route("/api/rounds", methods=['GET'])
-def get_rounds():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    rounds = dbc.get_all_rounds(people, teams)
-    orders = dbc.get_all_orders(drinks, people, rounds)
-    return jsonify([round.to_json() for round in list(rounds.values())])
-
-
-@app.route("/api/drinks", methods=['GET'])
-def get_drinks():
-    if request.method == "GET":
-        drinks = dbc.get_all_drinks()
-        return jsonify([drink.to_json() for drink in list(drinks.values())])
-
-
-@app.route('/new_drink', methods=['GET', 'POST'])
-def new_drink():
-    if request.method == "GET":
-        return render_template('drinks_form.html', title="Create form")
-
-    elif request.method == "POST":
-        drink_name = request.form.get("drink-name")
-        add_drink(drink_name)
-        return render_template("return_drink.html", title="Posted", drink=drink_name)
-
-
-@app.route("/api/teams", methods=['GET'])
-def get_teams():
-    teams = dbc.get_all_teams()
-    return jsonify([team.to_json() for team in list(teams.values())])
 
 
 @app.route('/new_order', methods=['GET', 'POST'])
@@ -129,6 +137,38 @@ def view_orders():
             [o.order_id, o.round_id, o.drink.__str__(), o.person.__str__(), o.notes])
 
     return render_template('view_orders.html', title="Do I even need a title", orders=pretty_orders)
+
+
+######################### API ##########################
+@app.route("/api/people", methods=['GET'])
+def get_person():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    return jsonify([person.to_json() for person in list(people.values())])
+
+
+@app.route("/api/rounds", methods=['GET'])
+def get_rounds():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    rounds = dbc.get_all_rounds(people, teams)
+    orders = dbc.get_all_orders(drinks, people, rounds)
+    return jsonify([round.to_json() for round in list(rounds.values())])
+
+
+@app.route("/api/drinks", methods=['GET'])
+def get_drinks():
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        return jsonify([drink.to_json() for drink in list(drinks.values())])
+
+
+@app.route("/api/teams", methods=['GET'])
+def get_teams():
+    teams = dbc.get_all_teams()
+    return jsonify([team.to_json() for team in list(teams.values())])
 
 
 if __name__ == "__main__":
