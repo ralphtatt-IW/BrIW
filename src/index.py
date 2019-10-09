@@ -13,11 +13,63 @@ def resource_not_found(e):
 
 
 @app.route("/")
-def hello_world():
-    return "Hello there! There is no homepage"
+def home_page():
+    return render_template('home.html', title="Home")
 
 
-@app.route("/drinks", methods=['GET'])
+@app.route("/teams")
+def teams_page():
+    teams = dbc.get_all_teams()
+    return render_template('teams.html', title="People", teams=teams)
+
+
+@app.route('/add_team', methods=['GET', 'POST'])
+def new_team():
+    if request.method == "GET":
+        return render_template('add_team.html', title="Add Team")
+
+    if request.method == "POST":
+        team_name = request.form.get("team-name")
+        team_location = request.form.get("team-location")
+        add_team(team_name, team_location)
+        return teams_page()
+
+
+@app.route("/drinks")
+def drinks_page():
+    drinks = dbc.get_all_drinks()
+    return render_template('drinks.html', title="Drinks", drinks=drinks)
+
+
+@app.route("/rounds")
+def rounds_page():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    rounds = dbc.get_all_rounds(people, teams)
+    orders = dbc.get_all_orders(drinks, people, rounds)
+    return render_template('rounds.html', title="Rounds", rounds=rounds)
+
+
+@app.route("/api/people", methods=['GET'])
+def get_person():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    return jsonify([person.to_json() for person in list(people.values())])
+
+
+@app.route("/api/rounds", methods=['GET'])
+def get_rounds():
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    rounds = dbc.get_all_rounds(people, teams)
+    orders = dbc.get_all_orders(drinks, people, rounds)
+    return jsonify([round.to_json() for round in list(rounds.values())])
+
+
+@app.route("/api/drinks", methods=['GET'])
 def get_drinks():
     if request.method == "GET":
         drinks = dbc.get_all_drinks()
@@ -35,39 +87,11 @@ def new_drink():
         return render_template("return_drink.html", title="Posted", drink=drink_name)
 
 
-@app.route("/teams", methods=['GET'])
+@app.route("/api/teams", methods=['GET'])
 def get_teams():
     teams = dbc.get_all_teams()
     return jsonify([team.to_json() for team in list(teams.values())])
 
-@app.route('/new_team', methods=['GET', 'POST'])
-def new_team():
-    if request.method == "GET":
-        return render_template('teams_form.html', title="Create form")
-
-    elif request.method == "POST":
-        team_name = request.form.get("team-name")
-        team_location = request.form.get("team-location")
-        add_team(team_name, team_location)
-        return render_template("return_team.html", title="Posted", name=team_name, location=team_location)
-
-
-@app.route("/people", methods=['GET'])
-def get_person():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    return jsonify([person.to_json() for person in list(people.values())])
-
-
-@app.route("/rounds", methods=['GET'])
-def get_rounds():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    rounds = dbc.get_all_rounds(people, teams)
-    orders = dbc.get_all_orders(drinks, people, rounds)
-    return jsonify([round.to_json() for round in list(rounds.values())])
 
 @app.route('/new_order', methods=['GET', 'POST'])
 def new_order():
@@ -91,18 +115,21 @@ def new_order():
         add_order(person, person.preference, rounds[int(round_key)], notes)
         return render_template("return_order.html", title="Posted")
 
+
 @app.route('/view_orders', methods=['GET'])
 def view_orders():
-        drinks = dbc.get_all_drinks()
-        teams = dbc.get_all_teams()
-        people = dbc.get_all_people(drinks, teams)
-        rounds = dbc.get_all_rounds(people, teams)
-        orders = dbc.get_all_orders(drinks, people, rounds)
-        pretty_orders = []
-        for o in list(orders.values()):
-            pretty_orders.append([o.order_id, o.round_id, o.drink.__str__(), o.person.__str__(), o.notes])
+    drinks = dbc.get_all_drinks()
+    teams = dbc.get_all_teams()
+    people = dbc.get_all_people(drinks, teams)
+    rounds = dbc.get_all_rounds(people, teams)
+    orders = dbc.get_all_orders(drinks, people, rounds)
+    pretty_orders = []
+    for o in list(orders.values()):
+        pretty_orders.append(
+            [o.order_id, o.round_id, o.drink.__str__(), o.person.__str__(), o.notes])
 
-        return render_template('view_orders.html', title="Do I even need a title", orders=pretty_orders)
+    return render_template('view_orders.html', title="Do I even need a title", orders=pretty_orders)
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=42069)
