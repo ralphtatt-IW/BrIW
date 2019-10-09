@@ -139,7 +139,12 @@ def new_order():
         teams = dbc.get_all_teams()
         people = dbc.get_all_people(drinks, teams)
         rounds = dbc.get_all_rounds(people, teams)
-        return render_template('new_order.html', title="Create form", people=people, rounds=rounds)
+        return render_template('new_order.html',
+                                title="Create Order",
+                                people=people,
+                                drinks=drinks,
+                                rounds=rounds
+                                )
 
     elif request.method == "POST":
         drinks = dbc.get_all_drinks()
@@ -147,11 +152,16 @@ def new_order():
         people = dbc.get_all_people(drinks, teams)
         rounds = dbc.get_all_rounds(people, teams)
 
-        round_key = request.form.get("round-name")
-        person_key = request.form.get("person-name")
+        round_key = request.form.get("round_id")
+        person_key = request.form.get("person_id")
+        drink_key = request.form.get("drink_id")
         notes = request.form.get("notes")
+
         person = people[int(person_key)]
-        add_order(person, person.preference, rounds[int(round_key)], notes)
+        drink = drinks[int(round_key)]
+        round = rounds[int(drink_key)]
+
+        add_order(person, drink, round, notes)
         return rounds_page()
 
 
@@ -165,7 +175,7 @@ def new_round():
                                 title="New round",
                                 people=people
                                 )
-                                
+
     if request.method == "POST":
         result = request.form.to_dict()
         person_id = int(result["person_id"])
