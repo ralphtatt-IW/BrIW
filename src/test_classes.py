@@ -1,16 +1,12 @@
 #! /usr/bin/env python3
 
 import unittest
-from main import *
+from classes import *
 
 
 class Test_Drink(unittest.TestCase):
-    def test_to_sql_values(self):
-        
-        pass
-
     def test_to_string(self):
-        drink = Drink("Milk")
+        drink = Drink(1, "Milk")
 
         expected_result = "Milk"
 
@@ -19,7 +15,7 @@ class Test_Drink(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_table_header(self):
-        drink = Drink("Milk")
+        drink = Drink(1, "Milk")
 
         expected_result = ["Name"]
 
@@ -28,7 +24,7 @@ class Test_Drink(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_details(self):
-        drink = Drink("Milk")
+        drink = Drink(1, "Milk")
 
         expected_result = ["Milk"]
 
@@ -37,23 +33,23 @@ class Test_Drink(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_equal_to_true(self):
-        first_drink = Drink("Milk")
+        first_drink = Drink(1, "Milk")
 
-        second_drink = Drink("Milk")
+        second_drink = Drink(1, "Milk")
 
         self.assertEqual(first_drink, second_drink)
 
     def test_equal_to_false(self):
-        first_drink = Drink("Milk")
+        first_drink = Drink(1, "Milk")
 
-        second_drink = Drink("Not Milk")
+        second_drink = Drink(1, "Not Milk")
 
         self.assertNotEqual(first_drink, second_drink)
 
 
 class Test_Team(unittest.TestCase):
     def test_get_table_headers(self):
-        team = Team("Academy", "2nd Floor")
+        team = Team(1, "Academy", "2nd Floor")
 
         actual_result = team.get_table_headers()
 
@@ -62,7 +58,7 @@ class Test_Team(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_details(self):
-        team = Team("Academy", "2nd Floor")
+        team = Team(1, "Academy", "2nd Floor")
 
         actual_result = team.get_details()
 
@@ -71,7 +67,7 @@ class Test_Team(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_to_string(self):
-        team = Team("Academy", "2nd Floor")
+        team = Team(1, "Academy", "2nd Floor")
 
         expected_result = "Academy"
 
@@ -83,50 +79,28 @@ class Test_Team(unittest.TestCase):
 class Test_Person(unittest.TestCase):
     #
     # def get_sql_values(self):
-    #     drink = Drink("Milk")
-    #     team = Team("Academy", "2nd Floor")
-    #     person = Person("Tessie", "Testingworth", drink, team)
+    #     drink = Drink(1,"Milk")
+    #     team = Team(1,"Academy", "2nd Floor")
+    #     person = Person(1,"Tessie", "Testingworth", drink, team)
     #
     #     actual_result = person.add_this_person_to_database();
     #     expected_result = "VALUES('Tessie','Testingworth','{team.get_}')"
     #     pass
 
     def test_to_string(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
 
         actual_result = str(person)
         expected_result = "Tessie Testingworth (Academy)"
 
         self.assertEqual(actual_result, expected_result)
 
-    def test_get_rounds_made(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-
-        actual_result = person.get_rounds_made()
-        expected_result = 0
-
-        self.assertEqual(actual_result, expected_result)
-
-    def test_made_round(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-
-        person.made_round()
-
-        actual_result = person.get_rounds_made()
-        expected_result = 1
-
-        self.assertEqual(actual_result, expected_result)
-
     def test_get_name(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
 
         actual_result = person.get_name()
         expected_result = "Tessie Testingworth"
@@ -134,19 +108,22 @@ class Test_Person(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_preference(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
 
         actual_result = person.get_preference()
         expected_result = drink
 
+        print(actual_result)
+        print(expected_result)
+
         self.assertEqual(actual_result, expected_result)
 
     def test_get_team(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
 
         actual_result = person.get_team()
         expected_result = team
@@ -154,31 +131,34 @@ class Test_Person(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_table_headers(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
 
         actual_result = person.get_table_headers()
-        expected_result = ["Name", "Team Name", "Fav. Drink", "Rounds Made"]
+        expected_result = ["Name", "Team Name", "Fav. Drink"]
 
         self.assertEqual(actual_result, expected_result)
 
     def test_get_details(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
 
         actual_result = person.get_details()
-        expected_result = [person.get_name(), person.get_team(
-        ), person.get_preference(), person.get_rounds_made()]
+        expected_result = [
+            person.get_name(),
+            person.get_team(),
+            person.get_preference(),
+        ]
 
         self.assertEqual(actual_result, expected_result)
 
     def test_set_preference(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        new_drink = Drink("Coffee")
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        new_drink = Drink(1, "Coffee")
 
         person.set_preference(new_drink)
 
@@ -189,26 +169,11 @@ class Test_Person(unittest.TestCase):
 
 
 class Test_Order(unittest.TestCase):
-    def test_change_order(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        order = Order(person, drink)
-
-        new_drink = Drink("Water")
-
-        order.change_order(new_drink)
-
-        expected_result = new_drink
-        actual_result = order.drink
-
-        self.assertEqual(actual_result, expected_result)
-
     def test_get_table_headers(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        order = Order(person, drink)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        order = Order(1, drink, person, 1, "")
 
         expected_result = ["Person", "Drink", "Notes"]
         actual_result = order.get_table_headers()
@@ -216,10 +181,10 @@ class Test_Order(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_notes(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        order = Order(person, drink, "Extra Milk")
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        order = Order(1, drink, person, 1, "Extra Milk")
 
         expected_result = "Extra Milk"
         actual_result = order.get_notes()
@@ -227,10 +192,10 @@ class Test_Order(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_details(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        order = Order(person, drink, "Extra Milk")
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        order = Order(1, drink, person, 1, "Extra Milk")
 
         expected_result = [person, drink, "Extra Milk"]
         actual_result = order.get_details()
@@ -241,10 +206,10 @@ class Test_Order(unittest.TestCase):
 class Test_Round(unittest.TestCase):
 
     def test_to_string(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        round = Round(1, person, 1, team)
 
         expected_result = "Team:Academy - Maker:Tessie Testingworth"
         actual_result = str(round)
@@ -252,10 +217,10 @@ class Test_Round(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_maker(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        round = Round(1, person, 1, team)
 
         expected_result = person
         actual_result = round.get_maker()
@@ -263,61 +228,35 @@ class Test_Round(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_team(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        round = Round(1, person, 1, team)
 
         expected_result = team
         actual_result = round.get_team()
 
         self.assertEqual(actual_result, expected_result)
 
-    def test_finish_round_active(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
-
-        round.finish_round()
-
-        expected_result = False
-        actual_result = round.active
-
-        self.assertEqual(actual_result, expected_result)
-
-    def test_finish_round_person_made(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
-
-        round.finish_round()
-
-        expected_result = 1
-        actual_result = person.rounds_made
-
-        self.assertEqual(actual_result, expected_result)
-
     def test_add_order(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
-        order = Order(person, drink, "Extra Milk")
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        round = Round(1, person, 1, team)
+        order = Order(1, drink, person, 1, "Extra Milk")
         round.add_order(order)
 
-        expected_result = [order]
+        expected_result = {order.order_id : order}
         actual_result = round.orders
 
         self.assertEqual(actual_result, expected_result)
 
     def test_get_order_size(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
-        order = Order(person, drink, "Extra Milk")
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        round = Round(1, person, 1, team)
+        order = Order(1, drink, person, 1, "Extra Milk")
         round.add_order(order)
 
         expected_result = 1
@@ -326,24 +265,12 @@ class Test_Round(unittest.TestCase):
         self.assertEqual(actual_result, expected_result)
 
     def test_get_table_headers_active(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
+        drink = Drink(1, "Milk")
+        team = Team(1, "Academy", "2nd Floor")
+        person = Person(1, "Tessie", "Testingworth", team, drink)
+        round = Round(1, person, 1, team)
 
-        expected_result = ["Team Name", "Maker", "Elasped Time", "Order Size"]
-        actual_result = round.get_table_headers()
-
-        self.assertEqual(actual_result, expected_result)
-
-    def test_get_table_headers_inactive(self):
-        drink = Drink("Milk")
-        team = Team("Academy", "2nd Floor")
-        person = Person("Tessie", "Testingworth", drink, team)
-        round = Round(person, team)
-        round.finish_round()
-
-        expected_result = ["Team Name", "Maker", "Duration", "Order Size"]
+        expected_result = ["Team Name", "Maker", "Active"]
         actual_result = round.get_table_headers()
 
         self.assertEqual(actual_result, expected_result)
