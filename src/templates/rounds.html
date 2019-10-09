@@ -1,0 +1,39 @@
+{% extends "master.html" %}
+{% block content %}
+
+<div class="center">
+  <input type="submit" value="New Round"
+      onclick="window.location='/my/link/location';" />
+</div>
+
+<table id="rounds">
+  <tr>
+    <th>ID</th>
+    <th>Maker</th>
+    <th>Team</th>
+    <th>Add Order</th>
+    <th>Mark Completed</th>
+  </tr>
+  {%  for r in rounds  %}
+    {% if rounds[r].active %}
+    <tr>
+      <td>
+        {{rounds[r].round_id}}
+      </td>
+      <td>
+        {{rounds[r].maker.full_name}}
+      </td>
+      <td>
+        {{rounds[r].team.name}}
+      </td>
+      <td>
+        <button type="button" name="button">Add Order</button>
+      </td>
+      <td>
+        <button type="button" name="button">Mark Completed</button>
+      </td>
+    </tr>
+    {% endif %}
+  {% endfor  %}
+</table>
+{% endblock %}
