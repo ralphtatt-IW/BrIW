@@ -1,0 +1,22 @@
+{% extends "master.html" %}
+{% block content %}
+
+<button type="button" name="button">New Drink</button>
+
+<table id="drinks">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+  </tr>
+  {%  for d in drinks  %}
+  <tr>
+    <td>
+      {{drinks[d].drink_id}}
+    </td>
+    <td>
+      {{drinks[d].name}}
+    </td>
+  </tr>
+  {% endfor  %}
+</table>
+{% endblock %}
