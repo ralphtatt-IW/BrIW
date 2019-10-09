@@ -1,0 +1,12 @@
+{% extends "master.html" %}
+
+{% block content %}
+<form id="add-drink-form" method="post">
+  <legend>Add new Drink:</legend>
+  <label for="drink-name">Drink:</label>
+  <input id="drink-name" type="text" name="drink-name" />
+
+  <input class="button" id="submit-btn" type="submit" value="Submit">
+</form>
+
+{% endblock %}
