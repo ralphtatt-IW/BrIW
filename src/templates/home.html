@@ -1,12 +1,48 @@
 {% extends "master.html" %}
 {% block content %}
+<script type="text/javascript">
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+   alert("You shouldn't be on your phone at work!");
+  }
+</script>
 
 <div class="branding">
+  <h1>Br<span>IW</span></h1>
+  <marquee><h2>THE UBER FOR DRINKS</h2></marquee>
 
-  <h1>BrIW</h1>
-
-  <h2>THE UBER FOR DRINKS</h2>
-  
+  <p>
+    A question has plagued thinkers since the dawn of time. <em>'What doth life?'</em>
+    This app may not be able to answer that question, but it will make sure
+    you and your team's thirst is suffiecently quenched as you search for answers.
+  </p>
+  <p>
+    BrIW rounds aren't about drinks. They're about being yourself. It's designed
+    for the dreames, the thinkers and the believers in change. Those who refuse to
+    stand by and let the world move on without them. This is the next step
+    in humanities evolution. Make the change that will help
+    you be the person you want to be. Help your team be the best. Society won't
+    wait, and neither should you.
+   </p>
+   <p>
+     BrIW was designed using only cutting edge technology, that has been
+     devleoped in the last 20 years. We don't sacrifice on the essentials, and
+     neither should you. Future plans include machine learning, block-chain and VR
+     integration. And best of all it's <span>free!</span>
+   </p>
+   <p>
+     So sign up today and...
+   </p>
+   <h2><em>
+     ... let BrIW become part of your team.
+   </em></h2>
+   <p>
+     <span>Ralph-Joseph Tatt (Visionairy and co-founder of BrIW) </span>
+   </p>
+   <br>
+   <a href="https://github.com/ralphtatt-IW/BrIW">
+     <img src="{{ url_for('static',filename='github.svg') }}" alt="github.svg">
+   </a>
+   <h2>Contribute</h2>
 </div>
 
 {% endblock %}
