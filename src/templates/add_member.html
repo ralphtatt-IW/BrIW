@@ -1,0 +1,31 @@
+{% extends "master.html" %}
+{% block content %}
+  <h1>Add new member:</h1>
+
+  <form class="" method="post">
+    <label for="first_name">First name:</label>
+    <input type="text" name="first_name">
+
+    <label for="second_name">Second name:</label>
+    <input type="text" name="second_name">
+
+    <label for="team_id">Select Team:</label>
+    <select name="team_id" method="GET" action="/">
+      {% for key in teams %}
+      <option value="{{key}}">{{teams[key].name}}</option>
+      {% endfor %}
+    </select>
+
+    <label for="drink_id">Select Prefered Drink:</label>
+    <select name="drink_id" method="GET" action="/">
+      {% for key in drinks %}
+      <option value="{{key}}">{{drinks[key].name}}</option>
+      {% endfor %}
+    </select>
+
+    <br>
+    <input class="button" id="submit-btn" type="submit" value="Submit">
+
+  </form>
+
+{% endblock %}
