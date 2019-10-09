@@ -1,22 +1,22 @@
 {% extends "master.html" %}
 {% block content %}
-
+    <h1>{{round_title}}</h1>
     <table id="orders">
       <tr>
         <th>Order ID</th>
-        <th>Round</th>
         <th>Drink</th>
         <th>Person</th>
         <th>Notes</th>
       </tr>
       {%  for o in orders  %}
-      <tr>
-        <td>{{o[0]}}</td>
-        <td>{{o[1]}}</td>
-        <td>{{o[2]}}</td>
-        <td>{{o[3]}}</td>
-        <td>{{o[4]}}</td>
-      </tr>
+        {% if orders[o].round_id == round_id %}
+          <tr>
+            <td>{{o}}</td>
+            <td>{{orders[o].drink.name}}</td>
+            <td>{{orders[o].person.full_name}}</td>
+            <td>{{orders[o].notes}}</td>
+          </tr>
+        {% endif %}
       {% endfor  %}
     </table>
   {% endblock %}
