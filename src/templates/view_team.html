@@ -1,0 +1,25 @@
+{% extends "master.html" %}
+{% block content %}
+<h1>{{team_name}}</h1>
+<table id="members">
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Drink Pref.</th>
+  </tr>
+  {% for p in people %}
+    {% if people[p].team.team_id == team_id %}
+      <tr>
+        <td>
+          {{people[p].person_id}}
+        </td>
+        <td>
+          {{people[p].full_name}}
+        </td>
+        <td>
+          {{people[p].preference.name}}
+        </td>
+      </tr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
