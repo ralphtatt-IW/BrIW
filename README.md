@@ -4,7 +4,7 @@ This app may not be able to answer that question, but it will make sure
 you and your team's thirst is suffiecently quenched as you search for answers.
 
 BrIW rounds aren't about drinks. They're about being yourself. It's designed
-for the dreames, the thinkers and the believers in change. Those who refuse to
+for the dreamers, the thinkers and the believers in change. Those who refuse to
 stand by and let the world move on without them. This is the next step
 in humanities evolution. Make the change that will help
 you be the person you want to be. Help your team be the best. Society won't
