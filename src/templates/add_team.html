@@ -1,0 +1,41 @@
+{% extends "master.html" %}
+
+{% block content %}
+
+<script>
+function check_team_name_valid(){
+  team_name = document.getElementsByName("team-name")[0].value.replace(/^\s+|\s+$/g, '');
+  if (team_name === ""){
+    alert("Team name can not be blank");
+    return false;
+  }
+  return confirm("Are you sure the name is " + team_name + "?")
+}
+
+function check_team_name_valid(){
+  team_location = document.getElementsByName("team-location")[0].value.replace(/^\s+|\s+$/g, '');
+  if (team_location === ""){
+    alert("Team location can not be blank");
+    return false;
+  }
+  return confirm("Are you they are located in " + team_location + "?")
+}
+
+function check_form_validation(){
+  return check_team_name_valid() && check_team_name_valid();
+}
+
+</script>
+
+<form id="add-team-form" method="post" onsubmit="return(check_form_validation())">
+  <legend>Add new Team:</legend>
+  <label for="team-name">Team name:</label>
+  <input id="team-name" type="text" name="team-name" />
+  <br>
+  <label for="team-location">Location:</label>
+  <input id="team-location" type="text" name="team-location" />
+
+  <input id="submit-btn" type="submit" value="Submit">
+</form>
+
+{% endblock %}
