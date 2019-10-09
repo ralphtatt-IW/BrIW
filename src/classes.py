@@ -31,7 +31,11 @@ class Person:
         return ["Name", "Team Name", "Fav. Drink"]
 
     def get_details(self):
-        return [self.get_name(), self.get_team(), self.get_preference()]
+        return [
+            self.get_name(),
+            self.get_team(),
+            self.get_preference()
+            ]
 
     def set_preference(self, preference):
         self.preference = preference
@@ -55,7 +59,7 @@ class Drink:
         return self.name
 
     def __eq__(self, other):
-        return self.drink_id == other.drink_id
+        return self.__dict__ == other.__dict__
 
     def get_table_headers(self):
         return ["Name"]
@@ -77,7 +81,7 @@ class Team:
         return self.name
 
     def __eq__(self, other):
-        return self.team_id == other.team_id
+        return self.__dict__ == other.__dict__
 
     def get_table_headers(self):
         return ["Name", "Location"]
@@ -121,6 +125,9 @@ class Round:
 
     def get_details(self):
         return [self.get_team(), self.get_maker(), self.active]
+
+    def get_order_size(self):
+        return len(self.orders);
 
     def to_json(self):
         return{
