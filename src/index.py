@@ -101,6 +101,37 @@ def rounds_page():
     return render_template('rounds.html', title="Rounds", rounds=rounds)
 
 
+@app.route('/round_completed', methods=['POST'])
+def mark_completed():
+    if request.method == "POST":
+        result = request.form.to_dict()
+        round_id = int(result["round_id"])
+        dbc.mark_completed(round_id)
+        return rounds_page()
+
+
+@app.route('/view_orders', methods=['GET', 'POST'])
+def view_orders():
+    if request.method == "POST":
+        result = request.form.to_dict()
+        round_id = int(result["round_id"])
+
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        rounds = dbc.get_all_rounds(people, teams)
+        orders = dbc.get_all_orders(drinks, people, rounds)
+
+        round_title = rounds[round_id].__str__()
+
+        return render_template('view_orders.html',
+                                title="Orders",
+                                orders=orders,
+                                round_id=round_id,
+                                round_title=round_title
+                                )
+
+
 @app.route('/new_order', methods=['GET', 'POST'])
 def new_order():
     if request.method == "GET":
@@ -121,23 +152,29 @@ def new_order():
         notes = request.form.get("notes")
         person = people[int(person_key)]
         add_order(person, person.preference, rounds[int(round_key)], notes)
-        return render_template("return_order.html", title="Posted")
+        return rounds_page()
 
 
-@app.route('/view_orders', methods=['GET'])
-def view_orders():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    rounds = dbc.get_all_rounds(people, teams)
-    orders = dbc.get_all_orders(drinks, people, rounds)
-    pretty_orders = []
-    for o in list(orders.values()):
-        pretty_orders.append(
-            [o.order_id, o.round_id, o.drink.__str__(), o.person.__str__(), o.notes])
-
-    return render_template('view_orders.html', title="Do I even need a title", orders=pretty_orders)
-
+@app.route('/new_round', methods=['GET', 'POST'])
+def new_round():
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        return render_template('new_round.html',
+                                title="New round",
+                                people=people
+                                )
+                                
+    if request.method == "POST":
+        result = request.form.to_dict()
+        person_id = int(result["person_id"])
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        maker = people[person_id]
+        add_round(maker, maker.team)
+        return rounds_page()
 
 ######################### API ##########################
 @app.route("/api/people", methods=['GET'])

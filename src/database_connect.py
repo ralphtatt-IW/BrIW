@@ -174,6 +174,17 @@ def get_all_rounds(people, teams):
     return rounds
 
 
+def mark_completed(round_id):
+    try:
+        con = make_connection()
+        with con.cursor() as cursor:
+            cursor.execute(f"""UPDATE Rounds
+                                SET active=0
+                                WHERE round_id={round_id}; """)
+            con.commit()
+    finally:
+        close_connection(con)
+
 def save_order(order):
     try:
         con = make_connection()
