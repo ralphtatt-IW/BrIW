@@ -1,32 +1,35 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>New order</title>
-  </head>
-  <body>
-    <legend>Add new order:</legend>
-    <form class="" method="post">
+{% extends "master.html" %}
+{% block content %}
+
+<form class="" method="post">
+  <label for="person_id">Select Person:</label>
+  <select name="person_id" method="GET" action="/">
+    {% for key in people %}
+      <option value="{{key}}">{{people[key].full_name}} (Preference: {{people[key].preference.name}})</option>
+    {% endfor %}
+  </select>
 
 
-    <label for="round-name">Select Round:</label>
-    <select name="round-name" method="GET" action="/">
-      {% for key in rounds %}
+  <label for="drink_id">Select Drink:</label>
+  <select name="drink_id" method="GET" action="/">
+    {% for key in drinks %}
+      <option value="{{key}}">{{drinks[key].name}}</option>
+    {% endfor %}
+  </select>
+
+  <p> Please only select a round relevant to your team, or your order may bot be processed </p>
+  <label for="round_id">Select Round:</label>
+  <select name="round_id" method="GET" action="/">
+    {% for key in rounds %}
+      {% if rounds[r].active %}
         <option value="{{key}}">{{rounds[key].__str__()}}</option>
-      {% endfor %}
-    </select>
-    <br>
-    <label for="person-name">Select person:</label>
-    <select name="person-name" method="GET" action="/">
-      {% for key in people %}
-        <option value="{{key}}">{{people[key].full_name}} - ({{people[key].preference}})</option>
-      {% endfor %}
-    </select>
-    <br>
-    <label for="notes">Notes:</label>
-    <input type="text" name="notes">
-    <br>
-    <input id="submit-btn" type="submit" value="Submit">
-    </form>
-  </body>
-</html>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  <br>
+  <input class="button" id="submit-btn" type="submit" value="Submit">
+
+</form>
+
+{% endblock %}
