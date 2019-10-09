@@ -13,6 +13,17 @@ a {
   color: inherit;
 }
 
+.center {
+  text-align: center;
+}
+
+button, input {
+  background-color: #E35205;
+  padding: 5px;
+  color: white;
+  font-family: 'Avenir Light';
+}
+
 .navbar {
   font-size: large;
   color: #E35205;
@@ -55,28 +66,62 @@ a {
   background-color: lightgrey;
 }
 
-#orders {
+table {
   border-collapse: collapse;
   width: 100%;
 }
 
-#orders td, #orders th {
+table td, table th {
   border: 1px solid #ddd;
   padding: 8px;
 }
 
-#orders tr:nth-child(even){
+table tr:nth-child(even){
   background-color: #f2f2f2;
 }
 
-#orders tr:hover {
+table tr:hover {
   background-color: #dddddd;
 }
 
-#orders th {
+table th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
   background-color: #333F48;
   color: white;
+}
+
+.team_block {
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  margin: 10px;
+  border-style: solid;
+  border-color: black;
+}
+
+.team_name {
+  justify-content: flex-start;
+}
+
+.team_button {
+  justify-content: flex-end;
+}
+
+.branding {
+  margin: 25px;
+}
+
+.branding h1, .branding h2 {
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 30px 0;
+  text-align: center;
 }
