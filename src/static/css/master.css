@@ -5,7 +5,6 @@
 
 body {
   font-family: 'Avenir Light';
-  background-color: #FFFFFF;
 }
 
 a {
@@ -17,11 +16,18 @@ a {
   text-align: center;
 }
 
-button, input {
+.button {
   background-color: #E35205;
-  padding: 5px;
+  padding: 10px;
+  margin:5px;
   color: white;
   font-family: 'Avenir Light';
+  border: 0 solid;
+}
+
+.button:hover {
+  background-color: #00B2A9;
+  cursor: pointer;
 }
 
 .navbar {
@@ -30,9 +36,10 @@ button, input {
   background-color: #333F48;
   overflow: auto;
   width: 100%;
+  border-bottom: 2px solid;
 }
 
-.navbar ul{
+.navbar ul {
   float: left;
 }
 
@@ -50,7 +57,6 @@ button, input {
   background-color: lightgrey;
   color: #00B2A9;
 }
-
 
 .container {
   margin: auto;
@@ -76,7 +82,7 @@ table td, table th {
   padding: 8px;
 }
 
-table tr:nth-child(even){
+table tr:nth-child(even) {
   background-color: #f2f2f2;
 }
 
@@ -122,6 +128,9 @@ footer {
   left: 0;
   bottom: 0;
   width: 100%;
-  padding: 30px 0;
+  padding: 10px 0;
   text-align: center;
+  color: #E35205;
+  background-color: #333F48;
+  border-top: 2px solid;
 }
