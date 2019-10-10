@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 @app.errorhandler(404)
 def resource_not_found(e):
-    return jsonify(error=str(e)), 404
+    return render_template('error.html', title="404")
 
 
 @app.route("/")
@@ -158,8 +158,8 @@ def new_order():
         notes = request.form.get("notes")
 
         person = people[int(person_key)]
-        drink = drinks[int(round_key)]
-        round = rounds[int(drink_key)]
+        drink = drinks[int(drink_key)]
+        round = rounds[int(round_key)]
 
         add_order(person, drink, round, notes)
         return rounds_page()
