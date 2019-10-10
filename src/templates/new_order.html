@@ -21,7 +21,7 @@
   <label for="round_id">Select Round:</label>
   <select name="round_id" method="GET" action="/">
     {% for key in rounds %}
-      {% if rounds[r].active %}
+      {% if rounds[key].active %}
         <option value="{{key}}">{{rounds[key].__str__()}}</option>
       {% endif %}
     {% endfor %}
