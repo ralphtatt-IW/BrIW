@@ -1,0 +1,15 @@
+{% extends "master.html" %}
+{% block content %}
+<script type="text/javascript">
+  if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+   alert("You shouldn't be on your phone at work!");
+  }
+</script>
+
+<div class="branding">
+  <h1>404</h1>
+  <marquee><h2>Sorry our engineers were too busy making tea to process your request!</h2></marquee>
+  <img src="{{ url_for('static',filename='404.jpg') }}" alt="404 on the 404.jpg">
+</div>
+
+{% endblock %}
