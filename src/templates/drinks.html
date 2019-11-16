@@ -1,6 +1,10 @@
 {% extends "master.html" %}
 {% block content %}
-
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
 <div class="center">
   <h1>Drinks</h1>
   <input class="button" type="submit" value="New Drink"

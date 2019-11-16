@@ -189,20 +189,22 @@ def new_round():
 ######################### API ##########################
 @app.route("/api/people", methods=['GET'])
 def get_person():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    return jsonify([person.to_json() for person in list(people.values())])
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        return jsonify([person.to_json() for person in list(people.values())])
 
 
 @app.route("/api/rounds", methods=['GET'])
 def get_rounds():
-    drinks = dbc.get_all_drinks()
-    teams = dbc.get_all_teams()
-    people = dbc.get_all_people(drinks, teams)
-    rounds = dbc.get_all_rounds(people, teams)
-    orders = dbc.get_all_orders(drinks, people, rounds)
-    return jsonify([round.to_json() for round in list(rounds.values())])
+    if request.method == "GET":
+        drinks = dbc.get_all_drinks()
+        teams = dbc.get_all_teams()
+        people = dbc.get_all_people(drinks, teams)
+        rounds = dbc.get_all_rounds(people, teams)
+        orders = dbc.get_all_orders(drinks, people, rounds)
+        return jsonify([round.to_json() for round in list(rounds.values())])
 
 
 @app.route("/api/drinks", methods=['GET'])
@@ -214,8 +216,14 @@ def get_drinks():
 
 @app.route("/api/teams", methods=['GET'])
 def get_teams():
-    teams = dbc.get_all_teams()
-    return jsonify([team.to_json() for team in list(teams.values())])
+    if request.method == "GET":
+        teams = dbc.get_all_teams()
+        return jsonify([team.to_json() for team in list(teams.values())])
+
+    elif request.method == "POST":
+        team_name = request.form.get("team_name")
+        team_location = request.form.get("team_location")
+        add_team(team_name, team_location)
 
 
 if __name__ == "__main__":
